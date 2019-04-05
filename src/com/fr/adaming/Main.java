@@ -74,7 +74,7 @@ public class Main {
 					
 					Object consultant = new Consultant(dn, nom, prenom, spe, nbHeureDispo);
 					consService.ajouter(consultant,session);
-//robert
+//roberta
 					break;
 				case 2:
 					System.out.println("Vous avez choisi de supprimer un consultant");
