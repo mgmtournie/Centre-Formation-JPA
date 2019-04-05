@@ -30,7 +30,7 @@ public class Main {
 		do {
 			System.out.println("1- Gestion des consultant \n2- Gestion des apprenants \n3- Gestion des cycles");
 
-			System.out.println("Saisir le num�ro de service demand�");
+			System.out.println("Saisir le num�ro de service demandé");
 			
 			@SuppressWarnings("resource")
 			Scanner sc1 = new Scanner(System.in);
