@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import com.fr.adaming.Entities.Consultant;
+import com.fr.adaming.Entities.CycleFormation;
 import com.fr.adaming.Interface.ICrud;
 
 
@@ -19,10 +20,10 @@ public class ConsService implements ICrud {
 
 	@Override
 	public void ajouter(Object object, Session session) {
-		Consultant cons = (Consultant) object;
+		CycleFormation cf = (CycleFormation) object;
 		Transaction t = session.beginTransaction();
 
-		session.persist(cons);
+		session.persist(cf);
 		System.out.println(toString());
 		t.commit();
 
@@ -31,17 +32,14 @@ public class ConsService implements ICrud {
 	@Override
 	public void supprimer(Session session) {
 
-		System.out.println("entrer les quatres premieres lettre du nom du consultant");
+		System.out.println("entrer le nom de la formation");
 		String nomSelect = sc1.nextLine();
-
-		System.out.println("Choisir le prenom du consultant");
-		String prenomSelect = sc1.nextLine();
 
 		Transaction t = session.beginTransaction();
 		Criteria cr = session.createCriteria(Consultant.class);
-		cr.add(Restrictions.like("nom", nomSelect + "%"));
-		cr.add(Restrictions.like("prenom", prenomSelect + "%"));
-		List<Consultant> results = cr.list();
+		cr.add(Restrictions.eq("nom", nomSelect));
+
+		List<CycleFormation> results = cr.list();
 		session.delete(results.get(0));
 
 		System.out.println("retrait effectué");
@@ -54,7 +52,7 @@ public class ConsService implements ICrud {
 		// TODO Auto-generated method stub
 		Transaction t = session.beginTransaction(); 
 		Criteria cr = session.createCriteria(Consultant.class);
-		List< Consultant>results = cr.list();
+		List<CycleFormation>results = cr.list();
 		System.out.println(results);
 
 //		 System.out.println("Enter le debut du titre du livre");
