@@ -1,91 +1,68 @@
 package com.fr.adaming.Service;
 
 import java.util.List;
-import java.util.Scanner;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
-import com.fr.adaming.Entities.Consultant;
 import com.fr.adaming.Entities.CycleFormation;
 import com.fr.adaming.Interface.ICrud;
 
 public class CycleFormService implements ICrud {
 
-	Scanner sc1 = new Scanner(System.in); // peut poser pb
-
 	@Override
 	public void ajouter(Object object, Session session) {
-		CycleFormation cf = (CycleFormation) object;
+		CycleFormation cons = (CycleFormation) object;
 		Transaction t = session.beginTransaction();
 
-		session.persist(cf);
-		System.out.println(toString());
+		session.persist(cons);
+		System.out.println(cons.toString());
 		t.commit();
+		session.flush();
 
 	}
 
 	@Override
-	public void supprimer(Session session) {
+	public void supprimer(Object object, Session session) {
 
-		System.out.println("Choisir l'identifiant du cycle de formation");
-		String idselect = sc1.nextLine();
-
-
-
+		CycleFormation cons = (CycleFormation) object;
 		Transaction t = session.beginTransaction();
 		Criteria cr = session.createCriteria(CycleFormation.class);
-		cr.add(Restrictions.like("id", idselect + "%"));
-	
-		List<Consultant> results = cr.list();
+		cr.add(Restrictions.like("titre", cons.getTitre()));
+
+		List<CycleFormation> results = cr.list();
 		session.delete(results.get(0));
 
 		System.out.println("retrait effectué");
 
 		t.commit();
+		session.flush();
 	}
 
 	@Override
-	public void consultation(Session session) {
+	public List consultation(Session session) {
 		// TODO Auto-generated method stub
-		Transaction t = session.beginTransaction(); 
+		Transaction t = session.beginTransaction();
 		Criteria cr = session.createCriteria(CycleFormation.class);
-		List< Consultant>results = cr.list();
-		System.out.println(results);
-
-//		 System.out.println("Enter le debut du titre du livre");
-//
-//		 String nom = sc1.nextLine();
-//
-//		
-//		 ResultSet resultContainer = ConsService.getconsultation("Select *	FROM consultant ",conn.createStatement());
-//		 while (resultContainer.next()) {
-//		 int id1 = resultContainer.getInt("idconsultant"); // ou
-//		 bien
-//		 String nom1 = resultContainer.getString("nom");
-//		 String prenom1 = resultContainer.getString("prenom");
-//		
-//		 Date dateNai = resultContainer.getDate("dateNaissance",
-//		 Calendar.getInstance(TimeZone.getTimeZone("UTC")));
-//		 String spe1 = resultContainer.getString("spe");
-//		 int nbHeure = resultContainer.getInt("nbHeureDispo");
-//		 int cyForm = resultContainer.getInt("cycleFormation"); //
-//		resultContainer.getInt
-//		 (2)
-//		
-//		 System.out.println(" identifiant:" + id1 + "\tnom: " + nom1 +
-//		 "\tpr�nom: " + prenom1
-//		 + "\tdate de naissance: " + dateNai + "\tsp�cialit�: " + spe1 +
-//		"\tnombre heure dispo: "
-//		+ nbHeure + "\tcycle de formation: " + cyForm);
-
+		List results = cr.list();
+		t.commit();
+		session.flush();
+		return results;
 	}
 
 	@Override
-	public void modification(Object object, Session session) {
+	public List rechercher(Object object, Session session) {
 		// TODO Auto-generated method stub
+		CycleFormation cons = (CycleFormation) object;
+		Transaction t = session.beginTransaction();
+		Criteria cr = session.createCriteria(CycleFormation.class);
+		cr.add(Restrictions.eq("titre", cons.getTitre()));
 
+		List<CycleFormation> results = cr.list();
+		t.commit();
+		session.flush();
+		return results;
 	}
 
 }

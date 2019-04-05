@@ -18,6 +18,12 @@ public class Consultant extends Personne {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Consultant(String nom, String prenom) {
+		super(nom, prenom);
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 	public Consultant(String dateNaissance, String nom, String prenom) {
 		super(dateNaissance, nom, prenom);
 		// TODO Auto-generated constructor stub

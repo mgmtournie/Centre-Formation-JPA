@@ -5,12 +5,14 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.fr.adaming.Entities.ConnectionDB;
 import com.fr.adaming.Entities.Consultant;
+import com.fr.adaming.Entities.Personne;
 import com.fr.adaming.Service.AppService;
 import com.fr.adaming.Service.ConsService;
 import com.fr.adaming.Service.CycleFormService;
@@ -32,7 +34,7 @@ public class Main {
 
 			System.out.println("Saisir le num�ro de service demandé");
 			
-			@SuppressWarnings("resource")
+			
 			Scanner sc1 = new Scanner(System.in);
 			int num = sc1.nextInt();
 
@@ -41,7 +43,7 @@ public class Main {
 				System.out.println("Vous avez choisi le service de gestion des consultants");
 
 				System.out
-						.println("1- Ajouter un consultant \n2- Supprimer un consultant  \n3- Consulter un consultant");
+						.println("1- Ajouter un consultant \n2- Supprimer un consultant  \n3- Voir tous les consultant \n4- Rechercher un consultant");
 
 				int cons = sc1.nextInt();
 
@@ -74,53 +76,48 @@ public class Main {
 					
 					Object consultant = new Consultant(dn, nom, prenom, spe, nbHeureDispo);
 					consService.ajouter(consultant,session);
-//roberta
+//roberta1
 					break;
 				case 2:
 					System.out.println("Vous avez choisi de supprimer un consultant");
 					sc1.nextLine();
+					System.out.println("entrer les quatres premieres lettre du nom du consultant");
+					String nomSelect = sc1.nextLine();
+
+					System.out.println("Choisir le prenom du consultant");
+					String prenomSelect = sc1.nextLine();
+					Object conSup= new Consultant(nomSelect, prenomSelect);
 					
-					consService.supprimer(session);
+					consService.supprimer(conSup, session);
 					break;
 				case 3:
 					System.out.println("Vous avez choisi de consulter la liste des consultants");
 					sc1.nextLine();
-					consService.consultation(session);
+					List<Consultant> results =consService.consultation(session);
+					for (int i = 0; i < results.size(); i++) {
+
+						System.out.println("\nnom: " + results.get(i).getNom() + "\tprénom: " + results.get(i).getPrenom()
+								+ "\tdate de naissance: " + results.get(i).getDateNaissance() + "\tspécialité: "
+								+ results.get(i).getSpe() + "\tnombre heure dispo: " + results.get(i).getNbHeureDispo());
+					}
 					
 					
-					/*try {
-						// System.out.println("Enter le debut du titre du
-						// livre");
+					break;
+				case 4:
+					System.out.println("Vous avez choisi de rechercher un consultant");
+					sc1.nextLine();
+					System.out.println("entrer les quatres premieres lettre du nom du consultant");
+					 nomSelect = sc1.nextLine();
 
-						// String nom = sc1.nextLine();
+					System.out.println("Choisir le prenom du consultant");
+					 prenomSelect = sc1.nextLine();
+					Object conRec= new Consultant(nomSelect, prenomSelect);
+					
+					results=consService.rechercher(conRec, session);
+					System.out.println(" nom: " + results.get(0).getNom() + "\tprénom: " + results.get(0).getPrenom()
+							+ "\tdate de naissance: " + results.get(0).getDateNaissance() + "\tspécialité: "
+							+ results.get(0).getSpe() + "\tnombre heure dispo: " + results.get(0).getNbHeureDispo());
 
-						Connection conn = ConnectionDB.getConnection();
-						ResultSet resultContainer = ConsService.getconsultation("Select *  FROM consultant ",
-								conn.createStatement());
-						while (resultContainer.next()) {
-							int id1 = resultContainer.getInt("idconsultant"); // ou
-																				// bien
-							String nom1 = resultContainer.getString("nom");
-							String prenom1 = resultContainer.getString("prenom");
-
-							Date dateNai = resultContainer.getDate("dateNaissance",
-									Calendar.getInstance(TimeZone.getTimeZone("UTC")));
-							String spe1 = resultContainer.getString("spe");
-							int nbHeure = resultContainer.getInt("nbHeureDispo");
-							int cyForm = resultContainer.getInt("cycleFormation"); // resultContainer.getInt
-							// (2)
-
-							System.out.println(" identifiant:" + id1 + "\tnom: " + nom1 + "\tpr�nom: " + prenom1
-									+ "\tdate de naissance: " + dateNai + "\tsp�cialit�: " + spe1
-									+ "\tnombre heure dispo: " + nbHeure + "\tcycle de formation: " + cyForm);
-
-							
-
-						}
-						ConnectionDB.closeConnection(conn);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}*/
 					break;
 				}
 				break;
@@ -203,16 +200,9 @@ public class Main {
 					sc1.nextLine();
 					System.out.println("Veuillez entrer une date de d�but au format yyyy-mm-dd :");
 					String dateDebut = sc1.nextLine();
-					Date dNaiss = new SimpleDateFormat("yyyy-MM-dd").parse(dateDebut);
-					// String dateToStr=
-					// DateFormat.getDateInstance().format(dNaiss);
-					// java.sql.Date dateToSql=new java.sql.Date(dNaiss);// date
-					// pour sql
-					java.sql.Date sqlDate = new java.sql.Date(dNaiss.getTime());
+				
 
-					cyclFormService.ajouter(
-							"insert into  centreformation.cycleformation (titre, description ,nbHeureForm ,dateDebut) values ('"
-									+ titre + "','" + description + "' , '" + nbHeureForm + "', '" + sqlDate + "')", session);
+					
 
 					break;
 				case 2:
@@ -221,9 +211,7 @@ public class Main {
 					System.out.println("Choisir le titre de la formation");
 					String titreSel = sc1.nextLine();
 
-					System.out.println("Choisir l'id de la formation");
-					int id = sc1.nextInt();
-					consService.supprimer( session);
+					
 					break;
 				case 3:
 					System.out.println("Vous avez choisi de consulter les cycles de formation");

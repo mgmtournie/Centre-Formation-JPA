@@ -31,6 +31,12 @@ public class Personne {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Personne(String nom, String prenom) {
+		// TODO Auto-generated constructor stub
+		this.nom = nom;
+		this.prenom = prenom;
+	}
+
 	public String getDateNaissance() {
 		return dateNaissance;
 	}
