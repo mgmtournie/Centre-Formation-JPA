@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import com.fr.adaming.Entities.Apprenant;
+import com.fr.adaming.Entities.Consultant;
 import com.fr.adaming.Interface.ICrud;
 
 public class AppService implements ICrud {
@@ -54,7 +55,7 @@ public class AppService implements ICrud {
 	@Override
 	public List rechercher(Object object, Session session) {
 		// TODO Auto-generated method stub
-		Apprenant cons = (Apprenant) object;
+		Consultant cons = (Consultant) object;
 		Transaction t = session.beginTransaction();
 		Criteria cr = session.createCriteria(Apprenant.class);
 		cr.add(Restrictions.like("nom", cons.getNom() + "%"));

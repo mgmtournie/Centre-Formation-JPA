@@ -128,7 +128,7 @@ public class Main {
 
 				System.out.println("1- Ajouter un apprenant \n2- Supprimer un apprenant  \n3- Consulter un apprenant");
 				int app = sc1.nextInt();
-				List<Apprenant> results;
+				
 				switch (app) {
 				case 1:
 					System.out.println("Vous avez choisi d'ajouter un apprenant");
@@ -174,7 +174,7 @@ public class Main {
 				case 3:
 					System.out.println("Vous avez choisi de consulter la liste des apprenants");
 					sc1.nextLine();
-					results = consService.consultation(session);
+					List<Apprenant> results= appService.consultation(session);
 					for (int i = 0; i < results.size(); i++) {
 
 						System.out
@@ -188,14 +188,14 @@ public class Main {
 				case 4:
 					System.out.println("Vous avez choisi de rechercher un apprenant");
 					sc1.nextLine();
-					System.out.println("entrer les quatres premieres lettre du nom du consultant");
+					System.out.println("entrer les quatres premieres lettre du nom de l'apprenant");
 					nomSelect = sc1.nextLine();
 
-					System.out.println("Choisir le prenom du consultant");
+					System.out.println("Choisir le prenom de l'apprenant");
 					prenomSelect = sc1.nextLine();
 					Object appRec = new Apprenant(nomSelect, prenomSelect);
 
-					results = consService.rechercher(appRec, session);
+					results = appService.rechercher(appRec, session);
 					System.out.println(" nom: " + results.get(0).getNom() + "\tprénom: " + results.get(0).getPrenom()
 							+ "\tdate de naissance: " + results.get(0).getDateNaissance() + "\tCv: "
 							+ results.get(0).getCv() + "\tDiplome: " + results.get(0).getDiplome());
