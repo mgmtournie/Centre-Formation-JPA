@@ -14,11 +14,11 @@ public class AppService implements ICrud {
 
 	@Override
 	public void ajouter(Object object, Session session) {
-		Apprenant cons = (Apprenant) object;
+		Apprenant app = (Apprenant) object;
 		Transaction t = session.beginTransaction();
 
-		session.persist(cons);
-		System.out.println(cons.toString());
+		session.persist(app);
+		
 		t.commit();
 		session.flush();
 
@@ -35,7 +35,7 @@ public class AppService implements ICrud {
 		List<Apprenant> results = cr.list();
 		session.delete(results.get(0));
 
-		System.out.println("retrait effectué");
+		
 
 		t.commit();
 		session.flush();

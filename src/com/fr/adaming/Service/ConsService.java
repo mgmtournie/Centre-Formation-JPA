@@ -18,7 +18,7 @@ public class ConsService implements ICrud {
 		Transaction t = session.beginTransaction();
 
 		session.persist(cons);
-		System.out.println(cons.toString());
+		
 		t.commit();
 		session.flush();
 

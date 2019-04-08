@@ -13,7 +13,7 @@
 
 <!-- Configuration des propriétés de hibernate -->
 <property name="hibernate.hbm2ddl.auto">update</property>
-<!-- Les valeurs possibles : create, update, validate, create-drop -->
+
 
 <!-- Déclarer le dialect correspondant à MySQL -->
 <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>

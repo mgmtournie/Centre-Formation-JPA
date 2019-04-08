@@ -13,11 +13,11 @@ public class CycleFormService implements ICrud {
 
 	@Override
 	public void ajouter(Object object, Session session) {
-		CycleFormation cons = (CycleFormation) object;
+		CycleFormation cy = (CycleFormation) object;
 		Transaction t = session.beginTransaction();
 
-		session.persist(cons);
-		System.out.println(cons.toString());
+		session.persist(cy);
+		
 		t.commit();
 		session.flush();
 
@@ -26,15 +26,15 @@ public class CycleFormService implements ICrud {
 	@Override
 	public void supprimer(Object object, Session session) {
 
-		CycleFormation cons = (CycleFormation) object;
+		CycleFormation cy = (CycleFormation) object;
 		Transaction t = session.beginTransaction();
 		Criteria cr = session.createCriteria(CycleFormation.class);
-		cr.add(Restrictions.like("titre", cons.getTitre()));
+		cr.add(Restrictions.like("titre", cy.getTitre()));
 
 		List<CycleFormation> results = cr.list();
 		session.delete(results.get(0));
 
-		System.out.println("retrait effectué");
+		
 
 		t.commit();
 		session.flush();
@@ -54,10 +54,10 @@ public class CycleFormService implements ICrud {
 	@Override
 	public List rechercher(Object object, Session session) {
 		// TODO Auto-generated method stub
-		CycleFormation cons = (CycleFormation) object;
+		CycleFormation cy = (CycleFormation) object;
 		Transaction t = session.beginTransaction();
 		Criteria cr = session.createCriteria(CycleFormation.class);
-		cr.add(Restrictions.eq("titre", cons.getTitre()));
+		cr.add(Restrictions.eq("titre", cy.getTitre()));
 
 		List<CycleFormation> results = cr.list();
 		t.commit();

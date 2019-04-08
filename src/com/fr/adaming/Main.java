@@ -77,7 +77,7 @@ public class Main {
 
 					Object consultant = new Consultant(dn, nom, prenom, spe, nbHeureDispo);
 					consService.ajouter(consultant, session);
-					// roberta1
+					System.out.println(consultant.toString());
 					break;
 				case 2:
 					System.out.println("Vous avez choisi de supprimer un consultant");
@@ -90,7 +90,7 @@ public class Main {
 					Object conSup = new Consultant(nomSelect, prenomSelect);
 
 					consService.supprimer(conSup, session);
-					System.out.println("retrait effectué");
+					System.out.println("retrait effectué du consultant dont le nom commence par"+nomSelect);
 					break;
 				case 3:
 					System.out.println("Vous avez choisi de consulter la liste des consultants");
@@ -155,20 +155,22 @@ public class Main {
 					System.out.println("Veuillez entrer un lien de CV:");
 					String cv = sc1.nextLine();
 
-					Object apprenant = new Apprenant(dn, nom, prenom, diplome, cv);
-					appService.ajouter(apprenant, session);
+					Object app1 = new Apprenant(dn, nom, prenom, diplome, cv);
+					appService.ajouter(app1, session);
+					System.out.println(app1.toString());
 					break;
 
 				case 2:
 					System.out.println("Vous avez choisi de supprimer un apprenant");
 					sc1.nextLine();
-					System.out.println("entrer les quatres premieres lettre du nom de l'apprenant");
+					System.out.println("Entrer les quatres premieres lettres du nom de l'apprenant");
 					String nomSelect = sc1.nextLine();
 
-					System.out.println("Choisir le prenom de l'apprenant");
+					System.out.println("Entrer  les quatres premieres lettres du prenom de l'apprenant");
 					String prenomSelect = sc1.nextLine();
 					Object appSup = new Apprenant(nomSelect, prenomSelect);
 					appService.supprimer(appSup, session);
+					System.out.println("retrait effectué de l'apprenant dont le nom commence par"+nomSelect);
 					break;
 
 				case 3:
@@ -210,7 +212,7 @@ public class Main {
 				System.out.println("Vous avez choisi le service de gestion des Cycles de Formations");
 
 				System.out.println(
-						"1- Ajouter un Cycle de formation \n2- Supprimer un Cycle de formation  \n3- Consulter un Cycle de formation");
+						"1- Ajouter un Cycle de formation \n2- Supprimer un Cycle de formation  \n3- Consulter un Cycle de formation  \n4- Rechercher cycle de formation");
 				int cf = sc1.nextInt();
 				switch (cf) {
 				case 1:
@@ -229,8 +231,8 @@ public class Main {
 					String dateDebut = sc1.nextLine();
 
 					Object formation = new CycleFormation(titre, description, nbHeureForm, dateDebut);
-					appService.ajouter(formation, session);
-
+					cyclFormService.ajouter(formation, session);
+					System.out.println(formation.toString());
 					break;
 				case 2:
 					System.out.println("Vous avez choisi de supprimer un Cycle de formation");
@@ -239,8 +241,8 @@ public class Main {
 					String titreSe1 = sc1.nextLine();
 					Object formSup = new CycleFormation(titreSe1);
 
-					appService.supprimer(formSup, session);
-
+					cyclFormService.supprimer(formSup, session);
+					System.out.println("retrait effectué du cycle de formation dont le titre commence par: "+titreSe1);
 					break;
 
 							case 3:
