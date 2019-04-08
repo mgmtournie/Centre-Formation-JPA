@@ -116,7 +116,7 @@ public class Main {
 					Object conRec = new Consultant(nomSelect, prenomSelect);
 
 					results = consService.rechercher(conRec, session);
-					System.out.println(" nom: " + results.get(0).getNom() + "\tprénom: " + results.get(0).getPrenom()
+					System.out.println("\nnom: " + results.get(0).getNom() + "\tprénom: " + results.get(0).getPrenom()
 							+ "\tdate de naissance: " + results.get(0).getDateNaissance() + "\tspécialité: "
 							+ results.get(0).getSpe() + "\tnombre heure dispo: " + results.get(0).getNbHeureDispo());
 
@@ -126,7 +126,7 @@ public class Main {
 			case 2:
 				System.out.println("Vous avez choisi le service de gestion des apprenants");
 
-				System.out.println("1- Ajouter un apprenant \n2- Supprimer un apprenant  \n3- Consulter un apprenant");
+				System.out.println("1- Ajouter un apprenant \n2- Supprimer un apprenant  \n3- Voir tous les apprenants \n4- Rechercher un apprenant");
 				int app = sc1.nextInt();
 				
 				switch (app) {
@@ -178,7 +178,7 @@ public class Main {
 					for (int i = 0; i < results.size(); i++) {
 
 						System.out
-								.println(" nom: " + results.get(0).getNom() + "\tprénom: " + results.get(0).getPrenom()
+								.println(" \nnom: " + results.get(0).getNom() + "\tprénom: " + results.get(0).getPrenom()
 										+ "\tdate de naissance: " + results.get(0).getDateNaissance() + "\tCv: "
 										+ results.get(0).getCv() + "\tDiplome: " + results.get(0).getDiplome());
 
@@ -242,13 +242,37 @@ public class Main {
 					appService.supprimer(formSup, session);
 
 					break;
-				case 3:
-					System.out.println("Vous avez choisi de consulter les cycles de formation");
+
+							case 3:
+					System.out.println("Vous avez choisi de consulter la liste des cycles de formations");
 					sc1.nextLine();
-					cyclFormService.consultation(session);
+					List<CycleFormation> results= cyclFormService.consultation(session);
+					for (int i = 0; i < results.size(); i++) {
+
+						System.out.println("\nTitre: " + results.get(0).getTitre() + "\tDescription: " + results.get(0).getDescription()
+										+ "\tdate de debut: " + results.get(0).getDateDebut() + "\tNombre d'heure de formation: "
+										+ results.get(0).getNbHeureForm());
+
+					}
+					break;
+
+				case 4:
+					System.out.println("Vous avez choisi de rechercher un cycle de formation");
+					sc1.nextLine();
+					System.out.println("entrer les quatres premieres lettre du titre");
+					titreSe1 = sc1.nextLine();
+
+					Object cfRec = new CycleFormation(titreSe1);
+
+					results = cyclFormService.rechercher(cfRec, session);
+					System.out.println("\nTitre: " + results.get(0).getTitre() + "\tDescription: " + results.get(0).getDescription()
+							+ "\tdate de debut: " + results.get(0).getDateDebut() + "\tNombre d'heure de formation: "
+							+ results.get(0).getNbHeureForm());
 
 					break;
+
 				}
+
 				break;
 
 			}
