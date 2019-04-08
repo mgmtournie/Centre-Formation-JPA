@@ -35,7 +35,7 @@ public class ConsService implements ICrud {
 		List<Consultant> results = cr.list();
 		session.delete(results.get(0));
 
-		System.out.println("retrait effectué");
+		
 
 		t.commit();
 		session.flush();
