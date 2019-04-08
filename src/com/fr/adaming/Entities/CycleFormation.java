@@ -36,6 +36,20 @@ public class CycleFormation {
 		this.dateDebut = dateDebut;
 //		this.listApp = listApp;
 	}
+	public CycleFormation(String titre, String description, int nbHeureForm, String dateDebut) {
+		super();
+		this.titre = titre;
+		this.description = description;
+		this.nbHeureForm = nbHeureForm;
+		this.dateDebut = dateDebut;
+//		this.listApp = listApp;
+	}
+	public CycleFormation(String titre) {
+		super();
+		this.titre = titre;
+
+//		this.listApp = listApp;
+	}
 
 	public String getTitre() {
 		return titre;

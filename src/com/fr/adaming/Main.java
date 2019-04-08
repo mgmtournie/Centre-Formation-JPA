@@ -1,18 +1,18 @@
 package com.fr.adaming;
 
-
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
+import org.hibernate.Session;
+
+import com.fr.adaming.Entities.Apprenant;
 import com.fr.adaming.Entities.ConnectionDB;
 import com.fr.adaming.Entities.Consultant;
-import com.fr.adaming.Entities.Personne;
+import com.fr.adaming.Entities.CycleFormation;
 import com.fr.adaming.Service.AppService;
 import com.fr.adaming.Service.ConsService;
 import com.fr.adaming.Service.CycleFormService;
@@ -24,17 +24,16 @@ public class Main {
 		CycleFormService cyclFormService = new CycleFormService();
 		ConsService consService = new ConsService();
 		AppService appService = new AppService();
-		
-		Session session = ConnectionDB.getSession(); 
-//		Transaction t = session.beginTransaction();
+
+		Session session = ConnectionDB.getSession();
+		// Transaction t = session.beginTransaction();
 		int Choix;
 
 		do {
 			System.out.println("1- Gestion des consultant \n2- Gestion des apprenants \n3- Gestion des cycles");
 
-			System.out.println("Saisir le num�ro de service demandé");
-			
-			
+			System.out.println("Saisir le numéro de service demandé");
+
 			Scanner sc1 = new Scanner(System.in);
 			int num = sc1.nextInt();
 
@@ -42,8 +41,8 @@ public class Main {
 			case 1:
 				System.out.println("Vous avez choisi le service de gestion des consultants");
 
-				System.out
-						.println("1- Ajouter un consultant \n2- Supprimer un consultant  \n3- Voir tous les consultant \n4- Rechercher un consultant");
+				System.out.println(
+						"1- Ajouter un consultant \n2- Supprimer un consultant  \n3- Voir tous les consultant \n4- Rechercher un consultant");
 
 				int cons = sc1.nextInt();
 
@@ -55,12 +54,14 @@ public class Main {
 					System.out.println("Veuillez entrer une date de naissance au format yyyy-mm-dd :");
 					sc1.nextLine();
 					String dn = sc1.nextLine();
-					//Date dNaiss = new SimpleDateFormat("yyyy-MM-dd").parse(dn);
+					// Date dNaiss = new
+					// SimpleDateFormat("yyyy-MM-dd").parse(dn);
 					// String dateToStr=
 					// DateFormat.getDateInstance().format(dNaiss);
 					// java.sql.Date dateToSql=new java.sql.Date(dNaiss);// date
 					// pour sql
-					//java.sql.Date sqlDate = new java.sql.Date(dNaiss.getTime());
+					// java.sql.Date sqlDate = new
+					// java.sql.Date(dNaiss.getTime());
 
 					System.out.println("Veuillez entrer un nom:");
 					String nom = sc1.nextLine();
@@ -73,10 +74,10 @@ public class Main {
 
 					System.out.println("Veuillez entrer un nombre d'heures disponibles:");
 					int nbHeureDispo = sc1.nextInt();
-					
+
 					Object consultant = new Consultant(dn, nom, prenom, spe, nbHeureDispo);
-					consService.ajouter(consultant,session);
-//roberta1
+					consService.ajouter(consultant, session);
+					// roberta1
 					break;
 				case 2:
 					System.out.println("Vous avez choisi de supprimer un consultant");
@@ -86,34 +87,35 @@ public class Main {
 
 					System.out.println("Choisir le prenom du consultant");
 					String prenomSelect = sc1.nextLine();
-					Object conSup= new Consultant(nomSelect, prenomSelect);
-					
+					Object conSup = new Consultant(nomSelect, prenomSelect);
+
 					consService.supprimer(conSup, session);
+					System.out.println("retrait effectué");
 					break;
 				case 3:
 					System.out.println("Vous avez choisi de consulter la liste des consultants");
 					sc1.nextLine();
-					List<Consultant> results =consService.consultation(session);
+					List<Consultant> results = consService.consultation(session);
 					for (int i = 0; i < results.size(); i++) {
 
-						System.out.println("\nnom: " + results.get(i).getNom() + "\tprénom: " + results.get(i).getPrenom()
-								+ "\tdate de naissance: " + results.get(i).getDateNaissance() + "\tspécialité: "
-								+ results.get(i).getSpe() + "\tnombre heure dispo: " + results.get(i).getNbHeureDispo());
+						System.out.println("\nnom: " + results.get(i).getNom() + "\tprénom: "
+								+ results.get(i).getPrenom() + "\tdate de naissance: "
+								+ results.get(i).getDateNaissance() + "\tspécialité: " + results.get(i).getSpe()
+								+ "\tnombre heure dispo: " + results.get(i).getNbHeureDispo());
 					}
-					
-					
+
 					break;
 				case 4:
 					System.out.println("Vous avez choisi de rechercher un consultant");
 					sc1.nextLine();
 					System.out.println("entrer les quatres premieres lettre du nom du consultant");
-					 nomSelect = sc1.nextLine();
+					nomSelect = sc1.nextLine();
 
 					System.out.println("Choisir le prenom du consultant");
-					 prenomSelect = sc1.nextLine();
-					Object conRec= new Consultant(nomSelect, prenomSelect);
-					
-					results=consService.rechercher(conRec, session);
+					prenomSelect = sc1.nextLine();
+					Object conRec = new Consultant(nomSelect, prenomSelect);
+
+					results = consService.rechercher(conRec, session);
 					System.out.println(" nom: " + results.get(0).getNom() + "\tprénom: " + results.get(0).getPrenom()
 							+ "\tdate de naissance: " + results.get(0).getDateNaissance() + "\tspécialité: "
 							+ results.get(0).getSpe() + "\tnombre heure dispo: " + results.get(0).getNbHeureDispo());
@@ -121,12 +123,12 @@ public class Main {
 					break;
 				}
 				break;
-
 			case 2:
 				System.out.println("Vous avez choisi le service de gestion des apprenants");
 
 				System.out.println("1- Ajouter un apprenant \n2- Supprimer un apprenant  \n3- Consulter un apprenant");
 				int app = sc1.nextInt();
+				List<Apprenant> results;
 				switch (app) {
 				case 1:
 					System.out.println("Vous avez choisi d'ajouter un apprenant");
@@ -144,7 +146,7 @@ public class Main {
 					System.out.println("Veuillez entrer un nom:");
 					String nom = sc1.nextLine();
 
-					System.out.println("Veuillez entrer un pr�nom:");
+					System.out.println("Veuillez entrer un prenom:");
 					String prenom = sc1.nextLine();
 
 					System.out.println("Veuillez entrer un diplome:");
@@ -153,28 +155,53 @@ public class Main {
 					System.out.println("Veuillez entrer un lien de CV:");
 					String cv = sc1.nextLine();
 
-					appService.ajouter(
-							"insert into  centreformation.apprenant (nom, prenom ,dateNaissance ,diplome, cv) values ('"
-									+ nom + "','" + prenom + "' , '" + sqlDate + "', '" + diplome + "', '" + cv + "')", session);
-
+					Object apprenant = new Apprenant(dn, nom, prenom, diplome, cv);
+					appService.ajouter(apprenant, session);
 					break;
 
 				case 2:
 					System.out.println("Vous avez choisi de supprimer un apprenant");
 					sc1.nextLine();
-					System.out.println("Choisir le nom de l'apprenant");
+					System.out.println("entrer les quatres premieres lettre du nom de l'apprenant");
 					String nomSelect = sc1.nextLine();
 
 					System.out.println("Choisir le prenom de l'apprenant");
 					String prenomSelect = sc1.nextLine();
-					consService.supprimer( session);
+					Object appSup = new Apprenant(nomSelect, prenomSelect);
+					appService.supprimer(appSup, session);
 					break;
 
 				case 3:
 					System.out.println("Vous avez choisi de consulter la liste des apprenants");
 					sc1.nextLine();
-					appService.consultation(session);
+					results = consService.consultation(session);
+					for (int i = 0; i < results.size(); i++) {
+
+						System.out
+								.println(" nom: " + results.get(0).getNom() + "\tprénom: " + results.get(0).getPrenom()
+										+ "\tdate de naissance: " + results.get(0).getDateNaissance() + "\tCv: "
+										+ results.get(0).getCv() + "\tDiplome: " + results.get(0).getDiplome());
+
+					}
 					break;
+
+				case 4:
+					System.out.println("Vous avez choisi de rechercher un apprenant");
+					sc1.nextLine();
+					System.out.println("entrer les quatres premieres lettre du nom du consultant");
+					nomSelect = sc1.nextLine();
+
+					System.out.println("Choisir le prenom du consultant");
+					prenomSelect = sc1.nextLine();
+					Object appRec = new Apprenant(nomSelect, prenomSelect);
+
+					results = consService.rechercher(appRec, session);
+					System.out.println(" nom: " + results.get(0).getNom() + "\tprénom: " + results.get(0).getPrenom()
+							+ "\tdate de naissance: " + results.get(0).getDateNaissance() + "\tCv: "
+							+ results.get(0).getCv() + "\tDiplome: " + results.get(0).getDiplome());
+
+					break;
+
 				}
 
 				break;
@@ -198,26 +225,27 @@ public class Main {
 					System.out.println("Veuillez entrer un nombre d'heures de formation:");
 					int nbHeureForm = sc1.nextInt();
 					sc1.nextLine();
-					System.out.println("Veuillez entrer une date de d�but au format yyyy-mm-dd :");
+					System.out.println("Veuillez entrer une date de debut au format yyyy-mm-dd :");
 					String dateDebut = sc1.nextLine();
-				
 
-					
+					Object formation = new CycleFormation(titre, description, nbHeureForm, dateDebut);
+					appService.ajouter(formation, session);
 
 					break;
 				case 2:
 					System.out.println("Vous avez choisi de supprimer un Cycle de formation");
 					sc1.nextLine();
 					System.out.println("Choisir le titre de la formation");
-					String titreSel = sc1.nextLine();
+					String titreSe1 = sc1.nextLine();
+					Object formSup = new CycleFormation(titreSe1);
 
-					
+					appService.supprimer(formSup, session);
+
 					break;
 				case 3:
 					System.out.println("Vous avez choisi de consulter les cycles de formation");
 					sc1.nextLine();
 					cyclFormService.consultation(session);
-					
 
 					break;
 				}
@@ -230,6 +258,6 @@ public class Main {
 			Choix = sc1.nextInt();
 
 		} while (Choix == 1);
-		
+
 	}
 }

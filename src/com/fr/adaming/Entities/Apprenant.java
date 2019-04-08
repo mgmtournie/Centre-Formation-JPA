@@ -7,7 +7,7 @@ public class Apprenant extends Personne{
 //	private int id;
 	private String diplome; 
 	private String cv;
-	private String cycleFormation; 
+
 	public Apprenant() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -16,11 +16,15 @@ public class Apprenant extends Personne{
 		super(dateNaissance, nom, prenom);
 		// TODO Auto-generated constructor stub
 	}
-	public Apprenant(String dateNaissance, String nom, String prenom, String diplome, String cv, String cycleFormation) {
+	public Apprenant(String dateNaissance, String nom, String prenom, String diplome, String cv) {
 		super(dateNaissance, nom, prenom);
 		this.diplome = diplome;
 		this.cv = cv;
-		this.cycleFormation = cycleFormation;
+	
+	}
+	public Apprenant(String nom, String prenom) {
+		super(nom, prenom);
+		// TODO Auto-generated constructor stub
 	}
 	public String getDiplome() {
 		return diplome;
@@ -34,16 +38,11 @@ public class Apprenant extends Personne{
 	public void setCv(String cv) {
 		this.cv = cv;
 	}
-	public String getCycleFormation() {
-		return cycleFormation;
-	}
-	public void setCycleFormation(String cycleFormation) {
-		this.cycleFormation = cycleFormation;
-	}
+
 	@Override
 	public String toString() {
 		return "Apprenant [date de naissance=" +getDateNaissance() +
-			", pr�nom="+getPrenom()+" ,nom="+getNom()+",diplome=" + diplome + ", cv=" + cv + ", cycleFormation=" + cycleFormation + "]";
+			", pr�nom="+getPrenom()+" ,nom="+getNom()+",diplome=" + diplome + ", cv=" + cv + ", cycleFormation=" +"]";
 	}
 	
 }
